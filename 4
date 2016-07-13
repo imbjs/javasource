@@ -1,0 +1,391 @@
+https://backlogtool.com/git-guide/kr/intro/intro1_1.html
+
+package kr.ac.itschool.gui;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+public class WindowHelloMain {
+
+	public static void main(String[] args) {
+		JFrame frame=new JFrame("Hello Java Program");
+		frame.setLocation(500,400);
+		frame.setPreferredSize(new Dimension(300,150));
+		Container contentPane=frame.getContentPane();
+		JTextField text=new JTextField();
+		JPanel panel=new JPanel();
+		JButton button1=new JButton("click");
+		JButton button2=new JButton("cancel");
+		panel.add(button1);
+		panel.add(button2);
+		JLabel label=new JLabel(" hello ");
+		contentPane.add(text,BorderLayout.CENTER);
+		contentPane.add(panel,BorderLayout.SOUTH);
+		contentPane.add(label,BorderLayout.EAST);
+		ActionListener listener=	new WindowHelloClickListener(text,label,button1,button2);
+		button1.addActionListener(listener);
+		button2.addActionListener(listener);
+		frame.pack();
+		frame.setVisible(true);
+	}
+}
+---------------------------------------------------------------------------
+package kr.ac.itschool.gui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class WindowHelloClickListener implements ActionListener {
+
+	private JTextField text;
+	private JLabel label;
+	private JButton button1;
+	private JButton button2;
+	public WindowHelloClickListener(JTextField text, JLabel label, JButton button1, JButton button2) {
+		this.text=text;
+		this.label=label;
+		this.button1=button1;
+		this.button2=button2;	
+		
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		System.out.println(e.getActionCommand());
+		String gettext=e.getActionCommand();
+		if(gettext.equals("cancel"))
+			text.setText("");
+		label.setText(" 잘 했어 몽키");
+		text.setText("");
+		}
+	}
+=======================================================================
+package kr.ac.itschool.calculator;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class CalculatorDemoMain {
+
+	public static void main(String[] args) {
+		JFrame frame=new JFrame("Calculator Js Program");
+		frame.setLocation(500,400);
+		frame.setPreferredSize(new Dimension(400,150));
+		Container contentPane=frame.getContentPane();
+		
+		JPanel panel=new JPanel();
+		JButton button1=new JButton("+");
+		JButton button2=new JButton("-");
+		JButton button3=new JButton("*");
+		JButton button4=new JButton("/");
+		JButton button5=new JButton("C");
+		panel.add(button1);
+		panel.add(button2);
+		panel.add(button3);
+		panel.add(button4);
+		panel.add(button5);
+		
+		JPanel panel2=new JPanel();
+		JTextField text=new JTextField(5);
+		JLabel label2=new JLabel();
+		JTextField text2=new JTextField(5);
+		JTextField text3=new JTextField(10);
+		JLabel label=new JLabel("=");	
+		panel2.add(text);
+		panel2.add(label2);
+		panel2.add(text2);
+		panel2.add(label);
+		panel2.add(text3);
+		
+		contentPane.add(panel,BorderLayout.SOUTH);
+		contentPane.add(panel2,BorderLayout.CENTER);
+	
+		ActionListener listener=	new CalculatorClickListener(text,text2,text3,button1,
+				button2,button3,button4,button5,label2);
+		ActionListener listener2=	new CalculatorClickListener2(text,text2,text3,button1,
+				button2,button3,button4,button5,label2);
+		ActionListener listener3=	new CalculatorClickListener3(text,text2,text3,button1,
+				button2,button3,button4,button5,label2);
+		ActionListener listener4=	new CalculatorClickListener4(text,text2,text3,button1,
+				button2,button3,button4,button5,label2);
+		ActionListener listener5=	new CalculatorClickListener5(text,text2,text3,button1,
+				button2,button3,button4,button5,label2);
+		button1.addActionListener(listener);
+		button2.addActionListener(listener2);
+		button3.addActionListener(listener3);
+		button4.addActionListener(listener4);
+		button5.addActionListener(listener5);
+		frame.pack();
+		frame.setVisible(true);
+	}
+}
+-----------------------------------------------------------------------------
+package kr.ac.itschool.calculator;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class CalculatorClickListener implements ActionListener {
+
+	private JTextField text;
+	private JTextField text2;
+	private JTextField text3;
+	private JButton button1;
+	private JButton button2;
+	private JButton button3;
+	private JButton button4;
+	private JButton button5;
+	private JLabel label2;
+	
+	public CalculatorClickListener(JTextField text,JTextField text2,JTextField text3,
+			JButton button1,JButton button2,JButton button3,
+			JButton button4,JButton button5,JLabel label2) {
+		this.text=text;
+		this.text2=text2;
+		this.text3=text3;
+		this.button1=button1;
+		this.button2=button2;
+		this.button3=button3;
+		this.button4=button4;
+		this.button5=button5;
+		this.label2=label2;
+}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		boolean intchk=chkNumber(text.getText());			
+		if (!intchk){
+			JOptionPane.showMessageDialog(text,"num1 숫자를 입력하시오!");
+			return;
+		}
+		int num1=Integer.parseInt(text.getText());
+		intchk=chkNumber(text2.getText());
+		if (!intchk){
+			JOptionPane.showMessageDialog(text2,"num2 숫자를 입력하시오!");
+			return;
+		}
+		int num2=Integer.parseInt(text2.getText());
+		int num3=num1+num2;
+		String str2=Integer.toString(num3);
+		text3.setText(str2);
+		label2.setText("+");
+	}
+	boolean chkNumber(String str){
+		boolean intchk =false;
+		try{
+			Integer.parseInt(str);
+			intchk=true;
+		}catch(Exception e){
+			
+		}
+		return intchk;
+	}
+	
+//	JOptionPane.showMessageDialog(label,"show");
+//	label.setText(label.getText()+text.getText());
+}
+=======================================================================
+package kr.ac.itschool.calculator;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class CalculatorDemoMain {
+
+	public static void main(String[] args) {
+		JFrame frame=new JFrame("Calculator Js Program");
+		frame.setLocation(500,400);
+		frame.setPreferredSize(new Dimension(400,150));
+		Container contentPane=frame.getContentPane();
+		
+		JPanel panel=new JPanel();
+		JButton button1=new JButton("+");
+		JButton button2=new JButton("-");
+		JButton button3=new JButton("*");
+		JButton button4=new JButton("/");
+		JButton button5=new JButton("C");
+		panel.add(button1);
+		panel.add(button2);
+		panel.add(button3);
+		panel.add(button4);
+		panel.add(button5);
+		
+		JPanel panel2=new JPanel();
+		JTextField text=new JTextField(5);
+		JLabel label2=new JLabel();
+		JTextField text2=new JTextField(5);
+		JTextField text3=new JTextField(10);
+		JLabel label=new JLabel("=");	
+		
+		panel2.add(text);
+		panel2.add(label2);
+		panel2.add(text2);
+		panel2.add(label);
+		panel2.add(text3);
+		
+		
+		contentPane.add(panel,BorderLayout.SOUTH);
+		contentPane.add(panel2,BorderLayout.CENTER);
+	
+		ActionListener listener=	new CalculatorClickListener(text,text2,text3,button1,
+				button2,button3,button4,button5,label2);
+//		ActionListener listener4=	new CalculatorClickListener4(text,text2,text3,button1,
+//				button2,button3,button4,button5,label2);
+		ActionListener listener5=	new CalculatorClickListener5(text,text2,text3,button1,
+				button2,button3,button4,button5,label2);
+		button1.addActionListener(listener);
+		button2.addActionListener(listener);
+		button3.addActionListener(listener);
+		button4.addActionListener(listener);
+		button5.addActionListener(listener);
+		frame.pack();
+		frame.setVisible(true);
+	}
+}
+-------------------------------------------------------
+package kr.ac.itschool.calculator;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class CalculatorClickListener implements ActionListener {
+
+	private JTextField text;
+	private JTextField text2;
+	private JTextField text3;
+	private JTextField text4;
+	private JButton button1;
+	private JButton button2;
+	private JButton button3;
+	private JButton button4;
+	private JButton button5;
+	private JLabel label2;
+		
+	public CalculatorClickListener(JTextField text,JTextField text2,
+			JTextField text3,JButton button1,JButton button2,
+			JButton button3,JButton button4,JButton button5,JLabel label2) {
+		this.text=text;
+		this.text2=text2;
+		this.text3=text3;
+		this.button1=button1;
+		this.button2=button2;
+		this.button3=button3;
+		this.button4=button4;
+		this.button5=button5;
+		this.label2=label2;
+}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String gettext=e.getActionCommand();
+		boolean intchk=chkNumber(text.getText());			
+		if (!intchk){
+			JOptionPane.showMessageDialog(text,"num1 숫자를 입력하시오!");
+			return;
+		}
+		double num1=Integer.parseInt(text.getText());
+		intchk=chkNumber(text2.getText());
+		if (!intchk){
+			JOptionPane.showMessageDialog(text2,"num2 숫자를 입력하시오!");
+			return;
+		}
+		double num2=Integer.parseInt(text2.getText());
+		
+		if(gettext.equals("+")){
+			double num3=num1+num2;
+			String str2=Double.toString(num3);
+			text3.setText(str2);
+			label2.setText("+");
+			
+		}
+		else if(gettext.equals("-")){
+			double num3=num1-num2;
+			String str2=Double.toString(num3);
+			text3.setText(str2);
+			label2.setText("-");	
+		}
+		else if(gettext.equals("*")){
+			double num3=num1*num2;
+			String str2=Double.toString(num3);
+			text3.setText(str2);
+			label2.setText("*");
+		}
+		else if(gettext.equals("/")){
+			if (num2==0 ){
+				JOptionPane.showMessageDialog(text2,"0으로 나눌수 없습니다!");
+				return;
+			}
+			else {
+			double  num3=num1/num2;
+			String str3=Double.toString(num3);
+			text3.setText(str3);
+			label2.setText("/");
+		
+			}
+		}
+		else if(gettext.equals("C")){
+			double  num3=num1/num2;
+			String str3=Double.toString(num3);
+			text3.setText(str3);
+			label2.setText("다시계산");
+		
+		
+		}
+		
+}
+	boolean chkNumber(String str){
+		boolean intchk =false;
+		try{
+			Integer.parseInt(str);
+			intchk=true;
+		}catch(Exception e){
+			
+		}
+		return intchk;
+	}
+	
+//	JOptionPane.showMessageDialog(label,"show");
+//	label.setText(label.getText()+text.getText());
+}
+==================================================================
