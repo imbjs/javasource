@@ -1,0 +1,199 @@
+package kr.ac.itschool.calculator;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+
+public abstract class CalDemoMain implements ActionListener {
+
+	public static void main(String[] args) {
+	
+    JFrame frame=new JFrame("Calculator Js2 Program");
+    frame.setLocation(400,300);
+    frame.setPreferredSize(new Dimension(200,250));
+    Container contentPane=frame.getContentPane();
+    Font font =new Font("바탕체",Font.BOLD,25);
+    
+    JPanel panel=new JPanel();
+    JTextField text=new JTextField(30);
+    JTextField text2=new JTextField(30);
+    
+    text.setHorizontalAlignment(text.RIGHT); 
+    text2.setHorizontalAlignment(text2.RIGHT); 
+    text.setFont(font);
+    text2.setFont(font);
+    text.setEditable(false);
+    text2.setEditable(false);
+    panel.add(text);
+    panel.add(text2);
+   BoxLayout boxlayout=new BoxLayout(panel,BoxLayout.Y_AXIS);
+   panel.setLayout(boxlayout);
+   
+    GridLayout layout= new GridLayout( 4,4);
+    JPanel panel2=new JPanel();
+    panel2.setLayout(layout);
+       
+    JButton button1=new JButton("1");
+    JButton button2=new JButton("2");
+    JButton button3=new JButton("3");
+    JButton button4=new JButton("4");
+    JButton button5=new JButton("5");
+    JButton button6=new JButton("6");
+    JButton button7=new JButton("7");
+    JButton button8=new JButton("8");
+    JButton button9=new JButton("9");
+    JButton button0=new JButton("0");
+    JButton button11=new JButton("+");
+    JButton button12=new JButton("-");
+    JButton button13=new JButton("*");
+    JButton button14=new JButton("/");
+    JButton button15=new JButton("C");
+    JButton button16=new JButton("=");
+    panel2.add(button1);
+    panel2.add(button2);
+    panel2.add(button3);
+    panel2.add(button11);
+    panel2.add(button4);
+    panel2.add(button5);
+    panel2.add(button6);
+    panel2.add(button12);
+    panel2.add(button7);
+    panel2.add(button8);
+    panel2.add(button9);
+    panel2.add(button13);
+    panel2.add(button15);
+    panel2.add(button0);
+    panel2.add(button16);
+    panel2.add(button14);
+   
+   
+	contentPane.add(panel,BorderLayout.NORTH);
+    contentPane.add(panel2,BorderLayout.CENTER);
+ 
+    ActionListener listener= new CalDemo2(text,text2);
+ 
+    button1.addActionListener(listener);
+    button2.addActionListener(listener);
+    button3.addActionListener(listener);
+    button4.addActionListener(listener);
+    button5.addActionListener(listener);
+    button6.addActionListener(listener);
+    button7.addActionListener(listener);
+    button8.addActionListener(listener);
+    button9.addActionListener(listener);
+    button0.addActionListener(listener);
+    button11.addActionListener(listener);
+    button12.addActionListener(listener);
+    button13.addActionListener(listener);
+    button14.addActionListener(listener);
+    button15.addActionListener(listener);
+    button16.addActionListener(listener);
+    
+    frame.pack();
+    frame.setVisible(true);
+     }
+}
+---------------------
+package kr.ac.itschool.calculator;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+public class CalDemo2 implements ActionListener {
+
+	private JTextField text;
+	private JTextField text2;
+	private ArrayList<String> sum = new ArrayList();
+	private String str;
+	private String str2;
+	private boolean bob = true;
+	private String sum2;
+	private String com;
+	
+public CalDemo2(JTextField text,JTextField text2){
+		this.text=text;
+		this.text2=text2;
+}
+@Override
+public void actionPerformed(ActionEvent e) {
+	
+	if (!bob){
+		text.setText("");
+		text2.setText("");
+		bob=true;
+	}
+	if(text2.getText().equals("0")){
+		 text2.setText(e.getActionCommand());
+		 sum.add(e.getActionCommand());
+	 }else{
+		 str = e.getActionCommand();
+		 sum.add(str);
+		 text2.setText(text2.getText()+e.getActionCommand());
+	 }
+ 	if(e.getActionCommand().equals("+")||e.getActionCommand().equals("-")
+ 			||e.getActionCommand().equals("*")||e.getActionCommand().equals("/")
+			 ){
+				 for(int i=0;i<sum.size()-1;i++){
+					 sum2+= Integer.parseInt(sum.get(i));	 
+				}
+				 	sum2=sum2.replace("null", "");
+				 	com = e.getActionCommand();
+				 	text.setText(sum2+com);
+				 	text2.setText("");
+				 	return;
+		 		}else if(e.getActionCommand().equals("C")){
+		 			text.setText("");
+		 			text2.setText("");
+		 			sum = new ArrayList<String>();
+		 			sum2 = new String();
+		 		}else if(e.getActionCommand().equals("=")){
+		 			str2 = text2.getText();
+				 	str2 = str2.replace("=", "");
+				 	int end = Integer.parseInt(str2);
+				 	int fir = Integer.parseInt(sum2);
+				 	
+					 	if(com.equals("+")){
+					 		int result= fir+end;
+						 	String som = Integer.toString(result);		
+						 	text2.setText(som);
+						 	text.setText("");
+					 	}else if(com.equals("-")){
+					 		int result= fir-end;
+						 	String som = Integer.toString(result);		
+						 	text2.setText(som);
+						 	text.setText("");
+					 	}else if(com.equals("*")){
+					 		int result= fir*end;
+						 	String som = Integer.toString(result);		
+						 	text2.setText(som);
+						 	text.setText("");
+					 	}else {
+					 		int result= fir/end;
+						 	String som = Integer.toString(result);		
+						 	text2.setText(som);
+						 	text.setText("");
+					 	}			 	
+			 			bob = false;
+			 			sum = new ArrayList<String>();
+			 			
+			 			sum2 = new String();
+	 			 		 
+				 	}
+		}
+}
